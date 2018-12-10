@@ -13,6 +13,8 @@ dependencies:
   user_repository:
     path: user_repository
   equatable: 0.1.6
+  bloc_dev_tools:
+    path: ../../packages/bloc_dev_tools
 
 dev_dependencies:
   flutter_test:
