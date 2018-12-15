@@ -68,6 +68,7 @@ abstract class Bloc<Event, State> {
           currentState: _stateSubject.value,
           event: currentEvent,
           nextState: nextState,
+          bloc: this,
         );
         BlocSupervisor().delegate?.onTransition(
               this,
