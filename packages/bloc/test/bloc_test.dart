@@ -15,7 +15,7 @@ void main() {
       setUp(() {
         simpleBloc = SimpleBloc();
         delegate = MockBlocDelegate();
-        when(delegate.onTransition(any)).thenReturn(null);
+        when(delegate.onTransition(any, any)).thenReturn(null);
 
         BlocSupervisor().delegate = delegate;
       });
@@ -51,6 +51,7 @@ void main() {
         expectLater(simpleBloc.state, emitsInOrder(expected)).then((dynamic _) {
           verify(
             delegate.onTransition(
+              simpleBloc,
               Transition<dynamic, String>(
                 currentState: '',
                 event: 'event',
@@ -70,6 +71,7 @@ void main() {
         expectLater(simpleBloc.state, emitsInOrder(expected)).then((dynamic _) {
           verify(
             delegate.onTransition(
+              simpleBloc,
               Transition<dynamic, String>(
                 currentState: '',
                 event: 'event1',
@@ -93,7 +95,7 @@ void main() {
       setUp(() {
         complexBloc = ComplexBloc();
         delegate = MockBlocDelegate();
-        when(delegate.onTransition(any)).thenReturn(null);
+        when(delegate.onTransition(any, any)).thenReturn(null);
 
         BlocSupervisor().delegate = delegate;
       });
@@ -133,6 +135,7 @@ void main() {
             .then((dynamic _) {
           verify(
             delegate.onTransition(
+              complexBloc,
               Transition<ComplexEvent, ComplexState>(
                 currentState: ComplexStateA(),
                 event: ComplexEventB(),
@@ -159,6 +162,7 @@ void main() {
         ).then((dynamic _) {
           verify(
             delegate.onTransition(
+              complexBloc,
               Transition<ComplexEvent, ComplexState>(
                 currentState: ComplexStateA(),
                 event: ComplexEventB(),
@@ -168,6 +172,7 @@ void main() {
           ).called(1);
           verify(
             delegate.onTransition(
+              complexBloc,
               Transition<ComplexEvent, ComplexState>(
                 currentState: ComplexStateB(),
                 event: ComplexEventC(),
@@ -199,7 +204,7 @@ void main() {
         transitions = [];
         counterBloc = CounterBloc(onTransitionCallback);
         delegate = MockBlocDelegate();
-        when(delegate.onTransition(any)).thenReturn(null);
+        when(delegate.onTransition(any, any)).thenReturn(null);
 
         BlocSupervisor().delegate = delegate;
       });
@@ -232,6 +237,7 @@ void main() {
           expectLater(transitions, expectedTransitions);
           verify(
             delegate.onTransition(
+              counterBloc,
               Transition<CounterEvent, int>(
                 currentState: 0,
                 event: Increment(),
@@ -260,6 +266,7 @@ void main() {
           expect(transitions, expectedTransitions);
           verify(
             delegate.onTransition(
+              counterBloc,
               Transition<CounterEvent, int>(
                 currentState: 0,
                 event: Increment(),
@@ -269,6 +276,7 @@ void main() {
           ).called(1);
           verify(
             delegate.onTransition(
+              counterBloc,
               Transition<CounterEvent, int>(
                 currentState: 1,
                 event: Increment(),
@@ -278,6 +286,7 @@ void main() {
           ).called(1);
           verify(
             delegate.onTransition(
+              counterBloc,
               Transition<CounterEvent, int>(
                 currentState: 2,
                 event: Increment(),
@@ -301,7 +310,7 @@ void main() {
       setUp(() {
         asyncBloc = AsyncBloc();
         delegate = MockBlocDelegate();
-        when(delegate.onTransition(any)).thenReturn(null);
+        when(delegate.onTransition(any, any)).thenReturn(null);
 
         BlocSupervisor().delegate = delegate;
       });
@@ -341,6 +350,7 @@ void main() {
         expectLater(asyncBloc.state, emitsInOrder(expected)).then((dynamic _) {
           verify(
             delegate.onTransition(
+              asyncBloc,
               Transition<AsyncEvent, AsyncState>(
                 currentState: AsyncState(
                   isLoading: false,
@@ -358,6 +368,7 @@ void main() {
           ).called(1);
           verify(
             delegate.onTransition(
+              asyncBloc,
               Transition<AsyncEvent, AsyncState>(
                 currentState: AsyncState(
                   isLoading: true,

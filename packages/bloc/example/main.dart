@@ -33,8 +33,8 @@ class CounterBloc extends Bloc<CounterEvent, int> {
 
 class SimpleBlocDelegate implements BlocDelegate {
   @override
-  void onTransition(Transition transition) {
-    print(transition.toString());
+  void onTransition(Bloc bloc, Transition transition) {
+    print('$transition');
   }
 }
 

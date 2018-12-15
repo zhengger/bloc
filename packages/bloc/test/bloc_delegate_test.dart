@@ -16,7 +16,7 @@ void main() {
         ComplexStateB(),
       ];
       BlocSupervisor().delegate = delegate;
-      when(delegate.onTransition(any)).thenReturn(null);
+      when(delegate.onTransition(any, any)).thenReturn(null);
 
       expectLater(
         complexBloc.state,
@@ -24,6 +24,7 @@ void main() {
       ).then((dynamic _) {
         verify(
           delegate.onTransition(
+            complexBloc,
             Transition<ComplexEvent, ComplexState>(
               currentState: ComplexStateA(),
               event: ComplexEventB(),
@@ -49,7 +50,7 @@ void main() {
         ComplexStateC()
       ];
       BlocSupervisor().delegate = delegate;
-      when(delegate.onTransition(any)).thenReturn(null);
+      when(delegate.onTransition(any, any)).thenReturn(null);
 
       expectLater(
         complexBlocA.state,
@@ -57,6 +58,7 @@ void main() {
       ).then((dynamic _) {
         verify(
           delegate.onTransition(
+            complexBlocA,
             Transition<ComplexEvent, ComplexState>(
               currentState: ComplexStateA(),
               event: ComplexEventB(),
@@ -72,6 +74,7 @@ void main() {
       ).then((dynamic _) {
         verify(
           delegate.onTransition(
+            complexBlocB,
             Transition<ComplexEvent, ComplexState>(
               currentState: ComplexStateA(),
               event: ComplexEventC(),
@@ -93,7 +96,7 @@ void main() {
         ComplexStateB()
       ];
       BlocSupervisor().delegate = null;
-      when(delegate.onTransition(any)).thenReturn(null);
+      when(delegate.onTransition(any, any)).thenReturn(null);
 
       expectLater(
         complexBloc.state,
@@ -101,6 +104,7 @@ void main() {
       ).then((dynamic _) {
         verifyNever(
           delegate.onTransition(
+            complexBloc,
             Transition<ComplexEvent, ComplexState>(
               currentState: ComplexStateA(),
               event: ComplexEventB(),
