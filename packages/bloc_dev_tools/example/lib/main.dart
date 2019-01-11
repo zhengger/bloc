@@ -20,7 +20,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    BlocSupervisor().delegate = DevBlocDelegate();
+    BlocSupervisor().delegate = DevBlocDelegate(port: 8081);
     super.initState();
   }
 
@@ -49,12 +49,12 @@ class CounterPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('Counter')),
-      body: BlocBuilder<CounterEvent, int>(
+      body: BlocBuilder<CounterEvent, CounterState>(
         bloc: _counterBloc,
-        builder: (BuildContext context, int count) {
+        builder: (BuildContext context, CounterState state) {
           return Center(
             child: Text(
-              '$count',
+              '${state.count}',
               style: TextStyle(fontSize: 24.0),
             ),
           );
@@ -90,31 +90,31 @@ class CounterPage extends StatelessWidget {
 
 abstract class CounterEvent {}
 
-class Increment extends CounterEvent {
+class Increment extends CounterEvent {}
+
+class Decrement extends CounterEvent {}
+
+class CounterState {
+  final int count;
+
+  const CounterState(this.count);
+
   @override
-  String toString() => """{
-    "type": "Increment"
-  }""";
+  String toString() => "$count";
 }
 
-class Decrement extends CounterEvent {
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
   @override
-  String toString() => """{
-    "type": "Decrement"
-  }""";
-}
-
-class CounterBloc extends Bloc<CounterEvent, int> {
-  @override
-  int get initialState => 0;
+  CounterState get initialState => CounterState(0);
 
   @override
-  Stream<int> mapEventToState(int state, CounterEvent event) async* {
+  Stream<CounterState> mapEventToState(
+      CounterState state, CounterEvent event) async* {
     if (event is Increment) {
-      yield state + 1;
+      yield CounterState(state.count + 1);
     }
     if (event is Decrement) {
-      yield state - 1;
+      yield CounterState(state.count - 1);
     }
   }
 }

@@ -25,8 +25,16 @@ export class BlocJsonDirective implements OnInit, OnChanges {
   }
 
   private renderJson() {
+    let content: any;
+
+    try {
+      content = JSON.parse(this.blocJson);
+    } catch {
+      content = this.blocJson;
+    }
+
     (this.el.nativeElement as Element).innerHTML = '';
-    const jsonFormatter = new JSONFormatter(this.blocJson, 1, {
+    const jsonFormatter = new JSONFormatter(content, 1, {
       theme: 'dark'
     });
     (this.el.nativeElement as Element).appendChild(jsonFormatter.render());

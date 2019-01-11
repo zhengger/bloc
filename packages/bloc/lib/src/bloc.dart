@@ -20,13 +20,10 @@ abstract class Bloc<Event, State> {
   /// Returns the current [State] of the [Bloc].
   State get currentState => _stateSubject.value;
 
-  /// Returns the current state of the bloc.
-  S get currentState => _stateSubject.value;
-
   /// Update the current state of the bloc.
   /// setting `currentState` bypasses `mapEventToState` and
   /// updates the bloc state immediately.
-  void set currentState(S newState) {
+  void set currentState(State newState) {
     _stateSubject.value = newState;
   }
 

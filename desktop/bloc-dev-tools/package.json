@@ -38,11 +38,12 @@
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "dependencies": {
+    "get-port": "^4.1.0",
     "json-formatter-js": "^2.2.1",
     "ws": "^6.1.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular-devkit/build-angular": "^0.12.1",
     "@angular/cli": "7.0.6",
     "@angular/common": "7.1.1",
     "@angular/compiler": "7.1.1",
@@ -56,6 +57,7 @@
     "@angular/router": "7.1.1",
     "@ngx-translate/core": "11.0.1",
     "@ngx-translate/http-loader": "4.0.0",
+    "@types/get-port": "^4.0.1",
     "@types/jasmine": "2.8.7",
     "@types/jasminewd2": "2.0.3",
     "@types/node": "8.9.4",

@@ -1,17 +1,24 @@
-.container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer;
-  padding: 5px;
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'current-state next-state';
+  height: 100%;
 }
 
 .current-state {
-  background: rgba(100, 0, 12, 1);
+  .state {
+    background: rgba(100, 0, 12, 1);
+  }
+  grid-area: current-state;
 }
 
 .next-state {
-  background: rgba(41, 47, 29, 1);
+  .state {
+    background: rgba(41, 47, 29, 1);
+  }
+  box-shadow: -2px 0px 2px 0px rgba(0, 0, 0, 0.75);
+  grid-area: next-state;
 }
 
 .state {

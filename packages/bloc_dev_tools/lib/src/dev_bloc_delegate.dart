@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 import 'package:bloc/bloc.dart';
 import 'package:web_socket_channel/io.dart';
 
 class DevBlocDelegate extends BlocDelegate {
-  final IOWebSocketChannel channel =
-      IOWebSocketChannel.connect("ws://localhost:34263");
+  IOWebSocketChannel channel;
   final Map<String, Transition> _blocMap = Map<String, Transition>();
 
-  DevBlocDelegate() {
+  DevBlocDelegate({@required int port}) : assert(port != null) {
+    channel = IOWebSocketChannel.connect("ws://localhost:$port");
     print('DevBlocDelegate()');
     channel.stream.listen((dynamic event) {
       final Map<String, dynamic> map = json.decode(event as String);
@@ -28,9 +29,9 @@ class DevBlocDelegate extends BlocDelegate {
 
     channel.sink.add(
       '''{
-        "currentState": ${transition.currentState},
-        "event": ${transition.event},
-        "nextState": ${transition.nextState},
+        "currentState": "${transition.currentState}",
+        "event": "${transition.event}",
+        "nextState": "${transition.nextState}",
         "timestamp":  ${DateTime.now().millisecondsSinceEpoch},
         "uuid": "$uuid"
       }''',

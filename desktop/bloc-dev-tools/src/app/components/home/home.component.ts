@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { TransitionService } from '../../providers';
+import { TransitionService, ElectronService } from '../../providers';
 import { Transition } from '../../models';
 import { convertMilliseconds } from '../../utils';
 
@@ -14,13 +14,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   private currentTimestamp: number;
   private activeTransitionIndex = 0;
   transitions: Transition[] = [];
+  port: number;
 
   constructor(
+    private electronService: ElectronService,
     private transitionService: TransitionService,
     private zone: NgZone
   ) {}
 
   ngOnInit() {
+    this.electronService.ipcRenderer.on('port', (event: any, args: string) => {
+      console.log('port', args);
+      this.zone.run(() => {
+        this.port = parseInt(args, 10);
+      });
+    });
+    this.electronService.ipcRenderer.send('fetchPort');
     this.transitionSubscription = this.transitionService.transitions.subscribe(
       transition => {
         if (typeof this.currentTimestamp === 'undefined') {

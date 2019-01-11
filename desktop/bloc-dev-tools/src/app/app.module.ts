@@ -15,6 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ElectronService, TransitionService } from './providers';
 
 import { BlocJsonDirective } from './directives';
+import { EventPipe } from './pipes';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -34,7 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EventsComponent,
     EventComponent,
     EventDetailsComponent,
-    BlocJsonDirective
+    BlocJsonDirective,
+    EventPipe
   ],
   imports: [
     BrowserModule,

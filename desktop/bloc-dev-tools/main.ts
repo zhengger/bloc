@@ -2,15 +2,17 @@ import { app, BrowserWindow, screen, ipcMain, Event } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import * as WebSocket from 'ws';
+const getPort = require('get-port');
 
+let port: number;
 let win: BrowserWindow;
 let serve: boolean;
 let ws: WebSocket;
 const args = process.argv.slice(1);
-const port = 34263;
 serve = args.some(val => val === '--serve');
 
-function startServer() {
+async function startServer() {
+  port = await getPort({ port: 8081 });
   const wss = new WebSocket.Server({ port });
   console.log('Server running on port', port);
 
@@ -21,6 +23,10 @@ function startServer() {
     });
   });
 }
+
+ipcMain.on('fetchPort', (event: Event, arg: any) => {
+  win.webContents.send('port', port);
+});
 
 ipcMain.on('dispatch', (event: Event, arg: any) => {
   ws.send(JSON.stringify({ uuid: arg.uuid }));

@@ -2,8 +2,10 @@
   height: 100%;
   display: grid;
   grid-template-columns: 0.5fr 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: 'events    drill-down';
+  grid-template-rows: 1fr 0.03fr;
+  grid-template-areas:
+    'events drill-down'
+    'footer footer';
 }
 
 .events {
@@ -22,5 +24,15 @@
 
 .footer {
   grid-area: footer;
-  background: rgb(38, 38, 38);
+  background: rgb(0, 118, 197);
+}
+
+.port {
+  display: flex;
+  width: calc(100% - 5px);
+  height: 100%;
+  font-size: 0.9em;
+  color: rgb(244, 244, 244);
+  justify-content: flex-end;
+  align-items: center;
 }
