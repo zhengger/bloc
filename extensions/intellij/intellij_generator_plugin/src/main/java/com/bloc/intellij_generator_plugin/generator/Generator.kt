@@ -10,7 +10,7 @@ abstract class Generator(private val blocName: String,
                          blocShouldUseEquatable: Boolean,
                          templateName: String) {
 
-    private val TEMPLATE_BLOC_CAMEL_CASE = "bloc_camel_case"
+    private val TEMPLATE_BLOC_PASCAL_CASE = "bloc_pascal_case"
     private val TEMPLATE_BLOC_SNAKE_CASE = "bloc_snake_case"
 
     private val templateString: String
@@ -18,7 +18,7 @@ abstract class Generator(private val blocName: String,
 
     init {
         templateValues = mutableMapOf(
-            TEMPLATE_BLOC_CAMEL_CASE to camelCase(),
+            TEMPLATE_BLOC_PASCAL_CASE to pascalCase(),
             TEMPLATE_BLOC_SNAKE_CASE to snakeCase()
         )
         try {
@@ -38,9 +38,9 @@ abstract class Generator(private val blocName: String,
         return substitutor.replace(templateString)
     }
 
-    fun camelCase(): String = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, blocName)
+    fun pascalCase(): String = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, blocName.replace("[\\s-]+".toRegex(), "_").toUpperCase())
 
-    fun snakeCase() = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, blocName)
+    fun snakeCase() = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_UNDERSCORE, blocName.replace("[\\s-]+".toRegex(), "_").toUpperCase())
 
     fun fileExtension() = "dart"
 }
